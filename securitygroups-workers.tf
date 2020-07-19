@@ -35,5 +35,6 @@ resource "aws_security_group_rule" "demo-node-ingress-cluster" {
   source_security_group_id = aws_security_group.demo-cluster.id
   to_port                  = 35000
   type                     = "ingress"
+  cidr_blocks = ["0.0.0.0/0"]
 }
 
