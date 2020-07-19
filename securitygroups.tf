@@ -15,23 +15,24 @@ resource "aws_security_group" "demo-cluster" {
   }
 }
 
-resource "aws_security_group_rule" "demo-cluster-ingress-node-https" {
+resource "aws_security_group_rule" "demo-cluster-ingress-node-tcp" {
   description              = "Allow pods to communicate with the cluster API Server"
-  from_port                = 443
+  from_port                = 30000
   protocol                 = "tcp"
   security_group_id        = aws_security_group.demo-cluster.id
   source_security_group_id = aws_security_group.demo-node.id
-  to_port                  = 443
+  to_port                  = 35000
   type                     = "ingress"
+  cidr_blocks = ["0.0.0.0/0"]
 }
 
-  resource "aws_security_group_rule" "demo-cluster-ingress-node-tcp" {
+  resource "aws_security_group_rule" "demo-cluster-ingress-node-https" {
   description       = "Allow workstation to communicate with the cluster API Server"
-  from_port         = 30000
+  from_port         = 443
   protocol          = "tcp"
   security_group_id = aws_security_group.demo-cluster.id
   source_security_group_id = aws_security_group.demo-node.id
-  to_port           = 35000
+  to_port           = 443
   type              = "ingress"
 }
 
