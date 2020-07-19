@@ -15,16 +15,26 @@ resource "aws_security_group" "demo-cluster" {
   }
 }
 
-  resource "aws_security_group_rule" "demo-cluster-ingress-node-https" {
+  resource "aws_security_group_rule" "demo-cluster-ingress-node" {
   description              = "Allow pods to communicate with the cluster API Server"
-  from_port                = 443
   protocol                 = "tcp"
   security_group_id        = aws_security_group.demo-cluster.id
   source_security_group_id = aws_security_group.demo-node.id
-  to_port                  = 443
-  type                     = "ingress"
+  
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+    
+  egress {
+    from_port   = 30000
+    to_port     = 35000
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
-
 resource "aws_security_group_rule" "demo-cluster-ingress-workstation-https" {
   # TF-UPGRADE-TODO: In Terraform v0.10 and earlier, it was sometimes necessary to
   # force an interpolation expression to be interpreted as a list by wrapping it
@@ -41,14 +51,4 @@ resource "aws_security_group_rule" "demo-cluster-ingress-workstation-https" {
   security_group_id = aws_security_group.demo-cluster.id
   to_port           = 443
   type              = "ingress"
-}
-
-resource "aws_security_group_rule" "demo-cluster-ingress-node-https" {
-  description              = "Allow pods to communicate with the cluster API Server"
-  from_port                = 30000
-  protocol                 = "tcp"
-  security_group_id        = aws_security_group.demo-cluster.id
-  source_security_group_id = aws_security_group.demo-node.id
-  to_port                  = 35000
-  type                     = "ingress"
 }
