@@ -20,6 +20,7 @@ resource "aws_security_group" "demo-cluster" {
   protocol                 = "tcp"
   security_group_id        = aws_security_group.demo-cluster.id
   source_security_group_id = aws_security_group.demo-node.id
+  vpc_id      = module.vpc.vpc_id
   
   ingress {
     from_port   = 443
