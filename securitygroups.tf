@@ -33,6 +33,7 @@ resource "aws_security_group_rule" "demo-cluster-ingress-node-tcp" {
   source_security_group_id = aws_security_group.demo-node.id
   to_port                  = 35000
   type                     = "ingress"
+  source_addresses = ["0.0.0.0/0"]
 } 
   
 resource "aws_security_group_rule" "demo-cluster-ingress-workstation-https" {
