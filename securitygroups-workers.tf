@@ -28,13 +28,12 @@ resource "aws_security_group_rule" "demo-node-ingress-self" {
 }
 
 resource "aws_security_group_rule" "demo-node-ingress-cluster" {
-  description              = "Allow worker Kubelets and pods to receive communication from the cluster control plane"
-  from_port                = 30000
-  protocol                 = "tcp"
-  security_group_id        = aws_security_group.demo-node.id
-  source_security_group_id = aws_security_group.demo-cluster.id
-  to_port                  = 35000
-  type                     = "ingress"
-  source_addresses = ["0.0.0.0/0"]
+  type = "ingress"
+  from_port = 30000
+  to_port = 35000
+  protocol = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+  security_group_id = "aws_security_group.demo-node.id"
 }
+
 
