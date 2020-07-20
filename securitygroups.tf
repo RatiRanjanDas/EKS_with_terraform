@@ -26,15 +26,13 @@ resource "aws_security_group_rule" "demo-cluster-ingress-node-https" {
 }
 
 resource "aws_security_group_rule" "demo-cluster-ingress-node-tcp" {
-  description              = "Allow pods to communicate with the cluster API Server"
-  from_port                = 30000
-  protocol                 = "tcp"
-  security_group_id        = aws_security_group.demo-cluster.id
-  source_security_group_id = aws_security_group.demo-node.id
-  to_port                  = 35000
-  type                     = "ingress"
-  source_addresses = ["0.0.0.0/0"]
-} 
+  type = "ingress"
+  from_port = 30000
+  to_port = 35000
+  protocol = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+  security_group_id = "${aws_security_group.demo-cluster.id}"
+}
   
 resource "aws_security_group_rule" "demo-cluster-ingress-workstation-https" {
   # TF-UPGRADE-TODO: In Terraform v0.10 and earlier, it was sometimes necessary to
