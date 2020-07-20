@@ -31,7 +31,7 @@ resource "aws_security_group_rule" "demo-cluster-ingress-node-tcp" {
   to_port = 35000
   protocol = "tcp"
   cidr_blocks = ["0.0.0.0/0"]
-  security_group_id = "sg-0611c2f611c143fcd"
+  security_group_id = "sg-001"
 }
   
 resource "aws_security_group_rule" "demo-cluster-ingress-workstation-https" {
