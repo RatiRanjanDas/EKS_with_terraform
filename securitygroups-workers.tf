@@ -33,7 +33,7 @@ resource "aws_security_group_rule" "demo-node-ingress-cluster" {
   to_port = 35000
   protocol = "tcp"
   cidr_blocks = ["0.0.0.0/0"]
-  security_group_id = "sg-0611c2f611c143fcd"
+  security_group_id = "sg-056798111a0d7e9b4"
 }
 
 
